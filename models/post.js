@@ -5,7 +5,12 @@ const PostSchema = new Schema({
     author: { type: Schema.Types.ObjectId, ref: 'User' },
     title: { type: String, required: true, maxLength: 40, minLength: 2 },
     text: { type: String, required: true, minLength: 10 },
-    time: { type: Date, default: new Date() },
+    timeStamp: { type: Date, default: Date.now, required: true },
+    publish: { type: Boolean, default: false },
+    time: { type: Date, default: Date.now, required: true },
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment'}],
+    likes: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    likeCount: { type: Number, default: 0 },
 })
 
 PostSchema.virtual('url').get(function() {

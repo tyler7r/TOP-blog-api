@@ -3,7 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const session = require('express-session');
+const passport = require('passport')
+const LocalStrategy = require('passport-local');
+const bcrypt = require('bcryptjs');
 require('dotenv').config();
+require('./passport');
 const mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
