@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 exports.log_in_get = asyncHandler(async (req, res, next) => {
-    res.render('login', {
+    res.json({
         title: 'Log In'
     })
 })
@@ -36,8 +36,8 @@ exports.log_in_post = asyncHandler(async (req, res, next) => {
 })
 
 exports.signup_get = asyncHandler(async (req, res, next) => {
-    res.render('signup', {
-        title: 'Sign Up!',
+    res.json({
+        message: 'Sign Up!',
     })
 })
 
@@ -65,17 +65,14 @@ exports.signup_post = [
             user.admin = false;
         }
         if (!errors.isEmpty()) {
-            res.render('signup', {
-                title: 'Sign Up!',
+            return res.status(403).json({
+                message: 'Sign Up!',
                 errors: errors.array()
             })
         } else {
             const userExists = await User.findOne({ username: req.body.username}).exec();
             if (userExists) {
-                res.render('signup', {
-                    title: 'Username not available',
-                    user: req.user,
-                })
+                throw new Error('Username already Exists');
             } else {
                 bcrypt.hash(user.password, 10, async(err, hashedPassword) => {
                     if (err) {
@@ -83,7 +80,10 @@ exports.signup_post = [
                     } else {
                         user.password = hashedPassword;
                         await user.save();
-                        res.redirect('/blog/login');
+                        res.status(200).json({
+                            message: 'User create successfully',
+                            user: user,
+                        })
                     }
                 })
             }
