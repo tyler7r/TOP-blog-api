@@ -10,11 +10,11 @@ const user = require('../models/user');
 
 /// user routes ///
 
-router.get('/login', user_controller.log_in_get);
+// router.get('/login', user_controller.log_in_get);
 
 router.post('/login', user_controller.log_in_post);
 
-router.get('/signup', user_controller.signup_get);
+// router.get('/signup', user_controller.signup_get);
 
 router.post('/signup', user_controller.signup_post);
 

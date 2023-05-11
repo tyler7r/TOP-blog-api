@@ -6,11 +6,12 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-exports.log_in_get = asyncHandler(async (req, res, next) => {
-    res.json({
-        title: 'Log In'
-    })
-})
+// exports.log_in_get = asyncHandler(async (req, res, next) => {
+//     // res.json({
+//     //     title: 'Log In'
+//     // })
+//     res.sendFile(path.join(__dirname, '../../client/src/components', 'Login.js'))
+// })
 
 exports.log_in_post = asyncHandler(async (req, res, next) => {
     try {
@@ -35,11 +36,9 @@ exports.log_in_post = asyncHandler(async (req, res, next) => {
     }
 })
 
-exports.signup_get = asyncHandler(async (req, res, next) => {
-    res.json({
-        message: 'Sign Up!',
-    })
-})
+// exports.signup_get = asyncHandler(async (req, res, next) => {
+//     res.sendFile(path.join(__dirname, '../../client/src/components', 'Login.js'))
+// })
 
 exports.signup_post = [
     body('username').trim().isLength({ min: 2, max: 15 }).withMessage('Username must be between 2 and 15 characters').escape(),

@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { Routes, BrowserRouter, Route } from 'react-router-dom';
 import { Signup } from './components/Signup';
+import { Login } from './components/Login';
 
 function App() {
-  // const [backendData, setBackendData] = useState([{}])
-
-  // useEffect(() => {
-  //   fetch('/blog/login').then(
-  //     response => response.json()
-  //   ).then(
-  //     data => {
-  //       setBackendData(data)
-  //     }
-  //   )
-  // }, []);
 
   return (
-    <div className="App">
-      <Signup />
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route path='/blog/signup' element={<Signup />} />
+          <Route path='/blog/login' element={<Login />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
