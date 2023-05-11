@@ -5,8 +5,10 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 exports.all_posts = asyncHandler(async (req, res, next) => {
-    res.render('index', {
-        title: "All Posts",
+    const posts = Post.find({ publish: true }).populate('author').exec();
+
+    res.status(200).json({
+        posts: posts,
     })
 })
 

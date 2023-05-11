@@ -10,12 +10,11 @@ export const Signup = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({...formData, [name]: value});
-        console.log(formData)
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
         let data = JSON.stringify(formData)
-        let result = await fetch('/blog/signup', {
+        await fetch('/blog/signup', {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
@@ -23,7 +22,7 @@ export const Signup = () => {
             },
             body: data,
         })
-        console.log(result);
+        window.location.href = '/blog/login';
     }
     return (
         <form>

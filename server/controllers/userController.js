@@ -26,7 +26,7 @@ exports.log_in_post = asyncHandler(async (req, res, next) => {
                 next(err)
             }
             const token = jwt.sign({user}, 'my_secret');
-            return res.status(200).json({ token, user })
+            return res.status(200).json({ token, user });
         })
     })(req, res, next);
     } catch (err) {
@@ -53,7 +53,6 @@ exports.signup_post = [
     body('admin').trim().escape(),
 
     asyncHandler(async (req, res, next) => {
-        console.log(req.body);
         const errors = validationResult(req);
         const user = new User({
             username: req.body.username,

@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
-export const Login = () => {
+export const Login = (props) => {
+    const { setUserAuth } = props;
     const [formData, setFormData] = useState({
         username: '',
         password: '',
     });
 
     const handleChange = (e) => {
-        console.log(e.target.name, e.target.value);
         const { name, value } = e.target;
         setFormData({...formData, [name]: value});
     }
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
         const data = JSON.stringify(formData);
-        const result = await fetch('/blog/login', {
+        const res = await fetch('/blog/login', {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
@@ -22,7 +23,11 @@ export const Login = () => {
             },
             body: data,
         })
-        console.log(result);
+        let myJson = await res.json();
+        setUserAuth(true);
+        localStorage.setItem('userInfo', JSON.stringify(myJson.user));
+        localStorage.setItem('token', JSON.stringify(myJson.token))
+        window.location.href = '/blog';
     }
 
     return(
