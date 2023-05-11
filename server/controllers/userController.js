@@ -54,6 +54,7 @@ exports.signup_post = [
     body('admin').trim().escape(),
 
     asyncHandler(async (req, res, next) => {
+        console.log(req.body);
         const errors = validationResult(req);
         const user = new User({
             username: req.body.username,
