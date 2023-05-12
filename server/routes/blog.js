@@ -22,10 +22,6 @@ router.post('/signup', user_controller.signup_post);
 
 router.get('/', post_controller.all_posts);
 
-router.get('/post/create', post_controller.create_post_get);
-
-router.post('/post/create', post_controller.create_post_post);
-
 // router.use('/post/create', passport.authenticate('jwt', {session: false}), user)
 
 router.get('/posts/:id', post_controller.post_detail);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 export const Login = (props) => {
-    const { setUserAuth } = props;
+    const { setAuth } = props;
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -24,7 +24,7 @@ export const Login = (props) => {
             body: data,
         })
         let myJson = await res.json();
-        setUserAuth(true);
+        setAuth(true);
         localStorage.setItem('userInfo', JSON.stringify(myJson.user));
         localStorage.setItem('token', JSON.stringify(myJson.token))
         window.location.href = '/blog';

@@ -15,6 +15,7 @@ require('dotenv').config();
 
 exports.log_in_post = asyncHandler(async (req, res, next) => {
     try {
+        console.log(req.user);
         passport.authenticate('local', {session: false}, (err, user, info) => {
             if (err || !user) {
                 return res.status(400).json({

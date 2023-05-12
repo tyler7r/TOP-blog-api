@@ -28,7 +28,7 @@ passport.use(new LocalStrategy(async (username, password, done) => {
 
 passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'my_secret'
+    secretOrKey: 'my_secret',
 }, async(jwtPayload, done) => {
     try {
         return done(null, jwtPayload.user)

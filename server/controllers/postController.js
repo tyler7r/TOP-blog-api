@@ -15,11 +15,3 @@ exports.all_posts = asyncHandler(async (req, res, next) => {
 exports.post_detail = asyncHandler(async (req, res, next) => {
 
 })
-
-exports.create_post_get = asyncHandler(async (req, res, next) => {
-
-})
-
-exports.create_post_post = asyncHandler(async (req, res, next) => {
-
-})
