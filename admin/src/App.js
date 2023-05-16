@@ -10,7 +10,9 @@ function App() {
         <Routes>
           <Route path='/admin' element={<Home />} />
           <Route path='/admin/post/create' element={<Post />} />
-        </Routes> 
+          <Route path='/admin/post/:id/update' element={<Post />} />
+          <Route path='/admin/post/:id/delete' element={<Post />} />
+        </Routes>
       </div>
     </BrowserRouter>
   );

@@ -12,6 +12,11 @@ const PostSchema = new Schema({
     likeCount: { type: Number, default: 0 },
 })
 
+PostSchema.virtual('adminUrl').get(function() {
+    console.log(this.id);
+    return `/admin/post/${this.id}`
+})
+
 PostSchema.virtual('url').get(function() {
     return `/blog/posts/${this.id}`
 })

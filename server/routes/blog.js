@@ -10,19 +10,13 @@ const user = require('../models/user');
 
 /// user routes ///
 
-// router.get('/login', user_controller.log_in_get);
-
 router.post('/login', user_controller.log_in_post);
-
-// router.get('/signup', user_controller.signup_get);
 
 router.post('/signup', user_controller.signup_post);
 
 /// post routes ///
 
 router.get('/', post_controller.all_posts);
-
-// router.use('/post/create', passport.authenticate('jwt', {session: false}), user)
 
 router.get('/posts/:id', post_controller.post_detail);
 

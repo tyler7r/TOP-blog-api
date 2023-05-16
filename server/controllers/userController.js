@@ -6,16 +6,8 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-// exports.log_in_get = asyncHandler(async (req, res, next) => {
-//     // res.json({
-//     //     title: 'Log In'
-//     // })
-//     res.sendFile(path.join(__dirname, '../../client/src/components', 'Login.js'))
-// })
-
 exports.log_in_post = asyncHandler(async (req, res, next) => {
     try {
-        console.log(req.user);
         passport.authenticate('local', {session: false}, (err, user, info) => {
             if (err || !user) {
                 return res.status(400).json({
@@ -36,10 +28,6 @@ exports.log_in_post = asyncHandler(async (req, res, next) => {
         })
     }
 })
-
-// exports.signup_get = asyncHandler(async (req, res, next) => {
-//     res.sendFile(path.join(__dirname, '../../client/src/components', 'Login.js'))
-// })
 
 exports.signup_post = [
     body('username').trim().isLength({ min: 2, max: 15 }).withMessage('Username must be between 2 and 15 characters').escape(),
@@ -90,13 +78,3 @@ exports.signup_post = [
         }
     })
 ]
-
-// Make a field on user creation page that allows the user to try and guess the secret key to become an admin
-
-// exports.admin_check_get = asyncHandler(async (req, res, next) => {
-
-// })
-
-// exports.admin_check_post = asyncHandler(async (req, res, next) => {
-
-// })
