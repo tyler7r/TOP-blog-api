@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 export const Home = () => {
     const [data, setData] = useState({});
     const [posts, setPosts] = useState([]);
+    const { id } = useParams();
 
     const getData = async () => {
         const token = JSON.parse(localStorage.getItem('token'));
@@ -24,6 +25,23 @@ export const Home = () => {
         }
     }
 
+    const changeStatus = async (e) => {
+        const token = JSON.parse(localStorage.getItem('token'));
+        const bearer = `Bearer ${token}`
+        try {
+            await fetch(`/admin/post/${e.target.id}/publish`, {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': bearer,
+                }
+            })
+            getData();
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
     useEffect(() => {
         getData();
     }, [])
@@ -36,7 +54,9 @@ export const Home = () => {
                     return (
                         <div key={post._id}>
                             <div>{post.title}</div>
-                            <Link to={`/admin/post/${post._id}/update`}>Update Post</Link>
+                            <div>Published: {post.publish.toString()}</div>
+                            <div id={post._id} onClick={(e) => changeStatus(e)}>Publish Post</div>
+                            <Link id={post._id} to={`/admin/post/${post._id}/update`}>Update Post</Link>
                             <Link to={`/admin/post/${post._id}/delete`}>Delete Post</Link>
                         </div>
                     )

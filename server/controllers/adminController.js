@@ -3,6 +3,7 @@ const { body, validationResult } = require('express-validator');
 const Post = require('../models/post');
 const { findOneAndUpdate } = require('../models/user');
 const User = require('../models/user');
+const post = require('../models/post');
 
 exports.admin_home = asyncHandler(async (req, res, next) => {
     let posts = await Post.find().populate('author').exec();
@@ -75,7 +76,11 @@ exports.update_post_post = [
 ]
 
 exports.publish_post = asyncHandler(async (req, res, next) => {
-    
+    let post = await Post.findById(req.params.id);
+    let updateStatus = await Post.findByIdAndUpdate(req.params.id, { publish: `${!post.publish}` });
+    return res.status(200).json({
+        post: updateStatus,
+    })
 })
 
 exports.delete_post_get = asyncHandler(async (req, res, next) => {

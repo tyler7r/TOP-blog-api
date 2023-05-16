@@ -13,7 +13,7 @@ router.get('/post/:id/update', passport.authenticate('jwt', { session: false }),
 
 router.post('/post/:id/update', passport.authenticate('jwt', { session: false }), admin_controller.update_post_post);
 
-router.post('/post/:id/publish', passport.authenticate('jwt', { session: false }), admin_controller.publish_post);
+router.get('/post/:id/publish', passport.authenticate('jwt', { session: false }), admin_controller.publish_post);
 
 router.get('/post/:id/delete', passport.authenticate('jwt', { session: false }), admin_controller.delete_post_get);
 
