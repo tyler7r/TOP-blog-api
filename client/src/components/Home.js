@@ -3,6 +3,13 @@ import { Link } from 'react-router-dom';
 
 export const Home = () => {
     const [user, setUser] = useState({});
+    const [posts, setPosts] = useState([]);
+
+    const retrievePosts = async() => {
+        await fetch('/blog')
+            .then(res => res.json())
+            .then(data => setPosts(data.posts));
+    }
 
     useEffect(() => {
         const userInfo = JSON.parse(localStorage.getItem('userInfo'))
@@ -10,9 +17,8 @@ export const Home = () => {
 
         if (userInfo) {
             setUser(userInfo);
-            console.log(userInfo);
-            console.log(token);
         }
+        retrievePosts();
     }, [])
 
     return (
@@ -21,6 +27,13 @@ export const Home = () => {
             {user.admin === true && (
                 <Link to='http://localhost:3000/admin'>Admin Page</Link>
             )}
+            {posts.map(post => {
+                return (
+                    <div key={post._id}>
+                        {post.title}: {post.time}
+                    </div>
+                )
+            })}
             <Link to='/blog/login'>Log In</Link>
             <Link to='/blog/signup'>Sign Up</Link>
         </div>
