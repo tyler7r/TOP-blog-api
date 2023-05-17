@@ -18,15 +18,11 @@ router.post('/signup', user_controller.signup_post);
 
 router.get('/', post_controller.all_posts);
 
-router.get('/posts/:id', post_controller.post_detail);
+router.get('/posts/:postId', post_controller.post_detail);
 
 /// comment routes ///
 
-router.get('/posts/:postId/comments', comment_controller.all_post_comments);
-
-router.get('/posts/:postId/create/comment', comment_controller.create_comment_get);
-
-router.post('/posts/:postId/create/comment', comment_controller.create_comment_post);
+router.post('/posts/:postId/create/comment', passport.authenticate('jwt', { session: false }), comment_controller.create_comment_post);
 
 router.get('/posts/:postId/:commentId/delete', passport.authenticate('jwt', { session: false }), comment_controller.delete_comment);
 

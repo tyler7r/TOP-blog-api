@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Comment } from './Comment';
 
-export const Home = () => {
-    const [user, setUser] = useState({});
+export const Home = (props) => {
+    const { setUser, user, setAuth, auth } = props;
     const [posts, setPosts] = useState([]);
 
     const retrievePosts = async() => {
+        let publishedPosts = [];
         await fetch('/blog')
             .then(res => res.json())
-            .then(data => setPosts(data.posts));
+            .then(data => {
+                for (let i = 0; i < data.posts.length ; i++) {
+                    if (data.posts[i].publish === true) {
+                        publishedPosts.push(data.posts[i])
+                    }
+                }
+                setPosts(publishedPosts);
+            });
+        publishedPosts = [];
     }
 
     useEffect(() => {
@@ -23,14 +33,21 @@ export const Home = () => {
 
     return (
         <div>
-            <div>Welcome {user.username}</div>
-            {user.admin === true && (
-                <Link to='http://localhost:3000/admin'>Admin Page</Link>
-            )}
+            <h1>The Blog</h1>
+            {user && 
+            <>
+                <div>Welcome: {user.username}</div>
+                {user.admin === true && (
+                    <Link to='http://localhost:3000/admin'>Admin Page</Link>
+                )}
+            </>
+            }
+            <h2>Posts</h2>
             {posts.map(post => {
                 return (
                     <div key={post._id}>
                         {post.title}: {post.time}
+                        <Link to={`/blog/posts/${post._id}`}>Comment</Link>
                     </div>
                 )
             })}
