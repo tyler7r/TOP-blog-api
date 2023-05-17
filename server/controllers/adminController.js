@@ -66,7 +66,9 @@ exports.update_post_post = [
                 errors: errors.array(),
             })
         } else {
-            await Post.findByIdAndUpdate(req.params.id, post);
+            await Post.findByIdAndUpdate(req.params.id, post).exec();
+            let posts = await Post.find({author: req.user._id}).exec();
+            await User.findByIdAndUpdate(req.user._id, { posts: posts }).exec();
             res.status(200).json({
                 message: 'Post create successfully',
                 post: post,
@@ -76,17 +78,28 @@ exports.update_post_post = [
 ]
 
 exports.publish_post = asyncHandler(async (req, res, next) => {
-    let post = await Post.findById(req.params.id);
-    let updateStatus = await Post.findByIdAndUpdate(req.params.id, { publish: `${!post.publish}` });
-    return res.status(200).json({
-        post: updateStatus,
+    try {
+        let post = await Post.findById(req.params.id).exec();
+        let updateStatus = await Post.findByIdAndUpdate(req.params.id, { publish: `${!post.publish}` }).exec();
+        let posts = await Post.find({ author: req.user._id }).exec();
+        await User.findByIdAndUpdate(req.user._id, { posts: posts }).exec();
+        return res.status(200).json({
+            post: updateStatus,
     })
+    } catch (err) {
+        console.error(err);
+    }
 })
 
 exports.delete_post_get = asyncHandler(async (req, res, next) => {
-
-})
-
-exports.delete_post_post = asyncHandler(async (req, res, next) => {
-
+    try {
+        await Post.findByIdAndDelete(req.params.id).exec();
+        let posts = await Post.find({ author: req.user._id }).exec();
+        await User.findByIdAndUpdate(req.user._id, { posts: posts }).exec();
+        return res.status(200).json({
+            post: post,
+    })
+    } catch (err) {
+        console.error(err);
+    }
 })

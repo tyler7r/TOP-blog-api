@@ -13,3 +13,7 @@ exports.create_comment_post = asyncHandler(async (req, res, next) => {
 exports.all_post_comments = asyncHandler(async (req, res, next) => {
 
 })
+
+exports.delete_comment = asyncHandler(async (req, res, next) => {
+    
+})

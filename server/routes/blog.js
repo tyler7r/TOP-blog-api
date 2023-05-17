@@ -28,4 +28,6 @@ router.get('/posts/:postId/create/comment', comment_controller.create_comment_ge
 
 router.post('/posts/:postId/create/comment', comment_controller.create_comment_post);
 
+router.get('/posts/:postId/:commentId/delete', passport.authenticate('jwt', { session: false }), comment_controller.delete_comment);
+
 module.exports = router;

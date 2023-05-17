@@ -17,6 +17,4 @@ router.get('/post/:id/publish', passport.authenticate('jwt', { session: false })
 
 router.get('/post/:id/delete', passport.authenticate('jwt', { session: false }), admin_controller.delete_post_get);
 
-router.post('/post/:id/delete', passport.authenticate('jwt', { session: false }), admin_controller.delete_post_post);
-
 module.exports = router;
