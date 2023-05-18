@@ -18,7 +18,7 @@ exports.log_in_post = asyncHandler(async (req, res, next) => {
             if (err) {
                 next(err)
             }
-            const token = jwt.sign({user}, 'my_secret');
+            const token = jwt.sign({user}, process.env.SECRET_KEY, {expiresIn: '1d'});
             return res.status(200).json({ token, user });
         })
     })(req, res, next);

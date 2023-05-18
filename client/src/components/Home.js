@@ -37,10 +37,10 @@ export const Home = (props) => {
 
     useEffect(() => {
         const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-        const token = JSON.parse(localStorage.getItem('token'))
         retrievePosts();
         if (userInfo) {
             setUser(userInfo);
+            setAuth(true);
         }
     }, [])
 
@@ -67,8 +67,12 @@ export const Home = (props) => {
                         </div>
                     )
                 })}
-                <Link to='/blog/login'>Log In</Link>
-                <Link to='/blog/signup'>Sign Up</Link>
+                {auth === false && 
+                <>
+                    <Link to='/blog/login'>Log In</Link>
+                    <Link to='/blog/signup'>Sign Up</Link>
+                </>
+                }
             </div>
             }
         </>
