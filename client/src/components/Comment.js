@@ -87,10 +87,13 @@ export const Comment = (props) => {
         const token = JSON.parse(localStorage.getItem('token'));
         const bearer = `Bearer ${token}`
         try {
-            await fetch(`/blog/comments/${e.target.id}/delete`, {
-                'Authorization': bearer,
-                'Content-Type': 'application/json',
-            })
+            await fetch(`/blog/comments/${postId}/${e.target.id}/delete`, {
+                method: 'get',
+                headers: {
+                    'Authorization': bearer,
+                    'Content-Type': 'application/json',
+                }
+            }).then(getData());
         } catch (err) {
             console.error(err)
         }
@@ -110,7 +113,9 @@ export const Comment = (props) => {
                                 <div>{comment.text}</div>
                                 <div>{comment.likes.length}</div>
                                 <div id={comment._id} onClick={(e) => handleLike(e)}>Like Comment</div>
-                                <div id={comment._id} onClick={(e) => deleteLike(e)}>Delete Comment</div>
+                                {comment.author._id === user._id &&
+                                    <div id={comment._id} onClick={(e) => deleteLike(e)}>Delete Comment</div>
+                                }
                             </div>
                         )
                     })}

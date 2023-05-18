@@ -34,9 +34,9 @@ exports.create_comment_post = [
 exports.like_comment = asyncHandler(async (req, res, next) => {
     let comment = await Comment.findById(req.params.commentId);
     if (comment.likes.includes(req.user._id)) {
-        await Comment.findByIdAndUpdate(req.params.commentId, { $pull: { likes: req.user._id }})
+        await Comment.findByIdAndUpdate(req.params.commentId, { $pull: { likes: req.user._id }}).exec();
     } else {
-        await Comment.findByIdAndUpdate(req.params.commentId, { $push: { likes: req.user._id }})
+        await Comment.findByIdAndUpdate(req.params.commentId, { $push: { likes: req.user._id }}).exec();
     }
     res.status(200).json({
         message: 'Comment Liked',
@@ -45,5 +45,10 @@ exports.like_comment = asyncHandler(async (req, res, next) => {
 })
 
 exports.delete_comment = asyncHandler(async (req, res, next) => {
-
+    let post = await Post.findByIdAndUpdate(req.params.postId, { $pull: { comments: req.params.commentId }}).exec()
+    await Comment.findByIdAndDelete(req.params.commentId).exec();
+    res.json({
+        message: 'Comment Deleted',
+        post: post,
+    })
 })
