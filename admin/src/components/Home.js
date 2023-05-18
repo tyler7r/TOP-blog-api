@@ -21,7 +21,7 @@ export const Home = () => {
             setData(myJson);
             setPosts(myJson.posts);
         } catch (err) {
-
+            console.error(err);
         }
     }
 

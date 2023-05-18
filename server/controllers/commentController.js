@@ -31,6 +31,19 @@ exports.create_comment_post = [
     })
 ]
 
+exports.like_comment = asyncHandler(async (req, res, next) => {
+    let comment = await Comment.findById(req.params.commentId);
+    if (comment.likes.includes(req.user._id)) {
+        await Comment.findByIdAndUpdate(req.params.commentId, { $pull: { likes: req.user._id }})
+    } else {
+        await Comment.findByIdAndUpdate(req.params.commentId, { $push: { likes: req.user._id }})
+    }
+    res.status(200).json({
+        message: 'Comment Liked',
+        comment: comment,
+    })
+})
+
 exports.delete_comment = asyncHandler(async (req, res, next) => {
 
 })

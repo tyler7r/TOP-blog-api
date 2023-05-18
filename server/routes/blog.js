@@ -24,6 +24,8 @@ router.get('/posts/:postId', post_controller.post_detail);
 
 router.post('/posts/:postId/create/comment', passport.authenticate('jwt', { session: false }), comment_controller.create_comment_post);
 
-router.get('/posts/:postId/:commentId/delete', passport.authenticate('jwt', { session: false }), comment_controller.delete_comment);
+router.get('/comments/:commentId/like', passport.authenticate('jwt', { session: false }), comment_controller.like_comment);
+
+router.get('/comments/:commentId/delete', passport.authenticate('jwt', { session: false }), comment_controller.delete_comment);
 
 module.exports = router;

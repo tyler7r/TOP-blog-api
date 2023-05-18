@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 export const Comment = (props) => {
     const { postId } = useParams();
@@ -64,12 +64,41 @@ export const Comment = (props) => {
             } else {
                 window.location.href = `/blog/posts/${postId}`;
             }
-            getData();
         })
+    }
+
+    const handleLike = async (e) => {
+        const token = JSON.parse(localStorage.getItem('token'));
+        const bearer = `Bearer ${token}`
+        try{
+            await fetch(`/blog/comments/${e.target.id}/like`, {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': bearer,
+                },
+            }).then(getData())
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    const deleteLike = async (e) => {
+        const token = JSON.parse(localStorage.getItem('token'));
+        const bearer = `Bearer ${token}`
+        try {
+            await fetch(`/blog/comments/${e.target.id}/delete`, {
+                'Authorization': bearer,
+                'Content-Type': 'application/json',
+            })
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     return (
         <>
+            <Link to={`/blog`}>Back to Home</Link>
             {postData !== null &&
                 <div>
                     <h2>{postData.post.title}</h2>
@@ -79,12 +108,15 @@ export const Comment = (props) => {
                         return (
                             <div key={comment._id}>
                                 <div>{comment.text}</div>
-                                <div>Like Comment</div>
+                                <div>{comment.likes.length}</div>
+                                <div id={comment._id} onClick={(e) => handleLike(e)}>Like Comment</div>
+                                <div id={comment._id} onClick={(e) => deleteLike(e)}>Delete Comment</div>
                             </div>
                         )
                     })}
                 </div>
             }
+            <h3>Post a Comment</h3>
             <form>
                 {user && 
                 <div>Username: {user.username}</div>
