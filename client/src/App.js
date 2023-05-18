@@ -3,7 +3,7 @@ import { Routes, BrowserRouter, Route } from 'react-router-dom';
 import { Signup } from './components/Signup';
 import { Login } from './components/Login';
 import { Home } from './components/Home';
-import { Comment } from './components/Comment';
+import { PostDetail } from './components/PostDetail';
 
 function App() {
   const [userAuth, setUserAuth] = useState(false);
@@ -16,7 +16,7 @@ function App() {
           <Route path='/blog' element={<Home setAuth={setUserAuth} auth={userAuth} user={user} setUser={setUser} />} />
           <Route path='/blog/signup' element={<Signup />} />
           <Route path='/blog/login' element={<Login setAuth={setUserAuth} user={user} setUser={setUser}/>} />
-          <Route path='/blog/posts/:postId' element={<Comment setAuth={setUserAuth} auth={userAuth} user={user} setUser={setUser} />} />
+          <Route path='/blog/posts/:postId' element={<PostDetail setAuth={setUserAuth} auth={userAuth} user={user} setUser={setUser} />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -20,6 +20,8 @@ router.get('/', post_controller.all_posts);
 
 router.get('/posts/:postId', post_controller.post_detail);
 
+router.get('/posts/:postId/like', passport.authenticate('jwt', { session: false }), post_controller.like_post);
+
 /// comment routes ///
 
 router.post('/posts/:postId/create/comment', passport.authenticate('jwt', { session: false }), comment_controller.create_comment_post);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
-export const Comment = (props) => {
+export const PostDetail = (props) => {
     const { postId } = useParams();
     const { user, setUser } = props;
     const [errors, setErrors] = useState([]);
@@ -77,7 +77,8 @@ export const Comment = (props) => {
                     'Content-Type': 'application/json',
                     'Authorization': bearer,
                 },
-            }).then(getData())
+            })
+            getData();
         } catch (err) {
             console.error(err)
         }
